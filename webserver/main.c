@@ -35,15 +35,18 @@ int main(int argc , char **argv){
 	  
 	  /* On peut maintenant dialoguer avec le client */
 	 
-	  write(socket_client , message_bienvenue , strlen(message_bienvenue));
-	  while((taille=read(socket_client,  message_client, 80))!=-1){
-	    if (taille == -1)
-	      {
-		perror("rien");	/* traitement d'erreur */
-	      }
+	  if(fork()!=0) {
+	    write(socket_client , message_bienvenue , strlen(message_bienvenue));
+	    while((taille=read(socket_client,  message_client, 80))!=-1){
+	      if (taille == -1)
+		{
+		  perror("rien");	/* traitement d'erreur */
+		}
 	      write(socket_client ,message_client ,taille);
-	  }
+	    }
+	    close(socket_client);
 	    
+	  }
 	}
 	
 	
