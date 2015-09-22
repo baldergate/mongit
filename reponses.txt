@@ -1,0 +1,22 @@
+1.
+Quittez votre serveur (Ctrl+C) et relancez le. Que se passe t’il ?
+
+reponse 1: Le client est déconnecter du serveur au Ctrl+c et le serveur nous annonce que l'adresse est déjà utilisée "bind socker_serveur: Address already in use" il faut attendre que le serveur soit fermé avant de le relancé, ce qui peut prendre quelques secondes.
+
+
+2.
+Ajouter un petit délai avant l’envoi du message de bienvenue (1 seconde). Puis, exécutez la commande suivante :nc -z 127.0.0.1 8080. Que se passe t’il?
+
+reponse 2: la commande n'affiche rien à la sortie standard, il ne se passe rien.
+
+
+3.
+Exécutez la commande suivante : telnet ::1 8080. Que se passe t’il? Pourquoi?
+
+reponse 3:
+
+
+4.
+Lancez deux clients simultanément. Que se passe t’il? Pourquoi ?
+
+reponse 4: les deux clients ne peuvent pas se connecter en même temps, une seul connexion est possible à la fois, l'autre attend.
