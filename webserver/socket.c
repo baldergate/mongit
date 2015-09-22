@@ -8,6 +8,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <signal.h>
 #include "socket.h"
 
 int creer_serveur(int port){
@@ -41,4 +42,14 @@ int creer_serveur(int port){
       perror("listen socket_serveur");	/* traitement d’erreur */
     }	
   return socket_serveur;
+}
+
+
+void initialiser_signaux (){
+  
+    if ( signal ( SIGPIPE , SIG_IGN ) == SIG_ERR )
+    {
+      perror ( " signal " );
+      }
+ 
 }
