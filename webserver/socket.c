@@ -12,7 +12,7 @@
 #include <sys/types.h>
 #include <signal.h>
 #include "socket.h"
-
+/*8.2 = 20 git tag stats*/
 int creer_serveur(int port){
   int socket_serveur;
   
