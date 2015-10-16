@@ -10,7 +10,9 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <fcntl.h>
 #include "socket.h"
+#include <sys/stat.h>
 
 enum http_method{
   HTTP_GET,
@@ -70,6 +72,35 @@ void send_response(FILE *client, int code, const char *reason_phrase, const char
   send_status(client,code,reason_phrase);
   fprintf(client,"%d \n %s\n",(int)strlen(message_body),message_body);
   fflush(client);
+}
+
+char *rewrite_url(char *url){
+  char *url1;
+  return url1 = strtok(url,"?");
+  
+}
+
+int check_and_open(const char *url, const char *document_root){
+  char *toto="";
+  char *tata="";
+  struct stat s;
+  int fd;
+  toto=strdup(url);
+  tata=strdup(document_root);
+  strcat(tata,rewrite_url(toto));
+  if (stat(tata,&s)==0){
+    if((fd =open(toto,O_RDONLY))!=-1){
+      return fd;
+    }
+    else{
+      return -1;
+    }
+  }
+  else{
+    
+    return -1;
+  }
+  
 }
 
 int main(int argc , char **argv){
