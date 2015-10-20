@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TP Formulaire</title>
+  <meta name="author" lang="fr" content="Chombart Bonnard" />
+  <meta charset="iso-8859-15" />
+</head>
+<body>
+<h1>Exemple de formulaire</h1>
+<form action="./index2.html" method="POST">
+<fieldset>
+  <legend>1. Les champs de texte</legend>
+  <table>
+    <tr>
+      <th colspan="2">Lignes de texte</th>
+      <th>Zone de texte</th>
+      <th><img src="wallhaven-26002.jpg" height="85" width="90" border="1"> </th>
+    </tr>
+    <tr>
+      <th>Visible :</th>
+      <td>&nbsp;<input type="text" name="zoneLigneTexte"
+        value="Ligne de texte par defaut" size="24" maxlength="30"></td>
+      <td rowspan="2"><textarea cols="40" rows="4" name="dutexte">Ici
+du texte sur plusieurs lignes.
+Ligne3
+Ligne4</textarea>
+	<td><img src="wallhaven-26007.jpg" height="85" width="90" border="1"></td>
+    </tr>
+    <tr>
+      <th>Invisible :</th>
+      <td>&nbsp;<input type="password" name="zoneMotDePasse"
+        value="MonMdPAMoi" size="12" maxlength="12"></td>
+    </tr>
+  </table>
+</fieldset>
+
+<input type="submit" name="btnSubmit" value="Envoyer">
+<input type="reset" name="btnReset" value="Annuler">
+</form>
+</body>
+</html>
