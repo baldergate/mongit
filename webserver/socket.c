@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include <string.h>
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <stdio.h>
@@ -8,11 +10,130 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <fcntl.h>
+#include "socket.h"
+#include <sys/stat.h>
 #include <sys/wait.h>
 #include <sys/types.h>
-#include <signal.h>
-#include "socket.h"
 /*8.2 = 20 git tag stats*/
+
+
+
+char *fgets_or_exit(char *buffer, int size, FILE *stream) {
+  if( fgets(buffer, size, stream) == NULL){ 
+    printf("Erreur!\n");
+    exit(1); 
+  }
+  return "";
+}
+
+int parse_http_request(const char *request_line, http_request *request){
+  char *convert_int_error;
+  char *methode;
+  char *resource;
+  char *toto=" " ;
+  toto =strdup(request_line);
+  methode = strtok(toto," ");
+  request->url=strtok(NULL," ");
+  resource = strtok(NULL," ");
+  strtok(resource,"/");
+  request->major_version = strtol(strtok(NULL,"."),&convert_int_error,10);
+  request->minor_version = strtol(strtok(NULL,"."),&convert_int_error,10);
+  if (!strcmp(methode,"GET")){
+    request->method=HTTP_GET;
+  }
+  else{
+    request->method=HTTP_UNSUPPORTED;
+    return 0;
+  }
+  return 1;
+}
+
+void skip_headers(FILE *client){
+  char tok [1024];
+  while(fgets(tok,sizeof(tok),client)!=NULL && tok[0] != '\r' && tok[0]!= '\n' );
+}
+
+void send_status(FILE *client, int code, const char *reason_phrase){
+  char *toto=" ";
+  toto =strdup(reason_phrase);
+  fprintf(client,"%d : %s",code, toto);
+  fflush(client);
+}
+
+void send_response(FILE *client, int code, const char *reason_phrase, const char * message_body){
+  send_status(client,code,reason_phrase);
+  fprintf(client,"%d \n %s\n",(int)strlen(message_body),message_body);
+  fflush(client);
+}
+
+char *rewrite_url(char *url){
+  char *url1;
+  return url1 = strtok(url,"?");
+  
+}
+
+int check_and_open(const char *url, const char *document_root){
+  char *toto="";
+  char *tata="";
+  struct stat s;
+  int fd;
+  toto=strdup(url);
+  tata=strdup(document_root);
+  strcat(tata,rewrite_url(toto));
+  if (stat(tata,&s)==0){
+    if((fd =open(toto,O_RDONLY))!=-1){
+      return fd;
+    }
+    else{
+      
+      return -1;
+    }
+  }
+  else{
+    
+    return -1;
+  }
+  
+}
+int get_file_size(int fd){ 
+  struct stat s;
+  if(fstat(fd,&s)==0){
+    return s.st_size;
+  }
+  return 0;
+  
+}
+
+int copy(int in, int out){
+  int pid;
+  
+  pid = fork();
+  if (pid==0){
+    if (in!=0){
+      close(0);
+      dup(in);
+      close(in);	
+    }
+    if (out!=1){
+      close(1);
+      dup(out);
+      close(out);
+    }
+    close(out);
+    exit(0);
+    return pid;
+  }
+  else{
+    if (in!=0)
+      close(in);
+    if (out!=1)
+      close(out);
+    return pid;
+  }
+}
+
+
 int creer_serveur(int port){
   int socket_serveur;
   
