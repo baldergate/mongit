@@ -12,3 +12,4 @@ Instructions
 
 
 L'utilisation du serveur: Pour utiliser le serveur, il faut vous placer dans ./mongit/webserver et executer la commande ./mongit
+						  Une fois le serveur lancer, il faut executer la commande "http://adresse_machine:8080"
