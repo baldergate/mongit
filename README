@@ -1,0 +1,12 @@
+	README 
+==============
+
+
+Instructions
+--------------
+
+-La compilation: Pour compiler le serveur il suffit d'utiliser le makefile mit à disposition. Pour cela executer la commande make dans ./mongit/webserver 
+
+-La configuration: 
+
+L'utilisation du serveur: Pour utiliser le serveur, il faut vous placer dans ./mongit/webserver et executer la commande ./mongit
