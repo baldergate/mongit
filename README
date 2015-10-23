@@ -7,6 +7,8 @@ Instructions
 
 -La compilation: Pour compiler le serveur il suffit d'utiliser le makefile mit à disposition. Pour cela executer la commande make dans ./mongit/webserver 
 
--La configuration: 
+
+-La configuration: Le serveur est configurer pour le port 8080 pour le modifier il faut acceder a socket.c
+
 
 L'utilisation du serveur: Pour utiliser le serveur, il faut vous placer dans ./mongit/webserver et executer la commande ./mongit
